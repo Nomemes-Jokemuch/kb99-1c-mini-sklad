@@ -20,7 +20,8 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.Товары</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Document.Поступление</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Document.Реализация</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">af21871b-3cd9-4ad0-b0e2-64d5106b3396</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">AccumulationRegister.ОстаткиТоваров</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">f3423587-2cd8-4061-9a8e-07c3912df6a5</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
