@@ -13,26 +13,64 @@
 		<field xsi:type="DataSetFieldField">
 			<dataPath>Товар</dataPath>
 			<field>Товар</field>
-			<role>
-				<dcscom:dimension>true</dcscom:dimension>
-			</role>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>КоличествоОборот</dataPath>
 			<field>КоличествоОборот</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Количество оборотов</v8:content>
+				</v8:item>
+			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>СуммаОборот</dataPath>
 			<field>СуммаОборот</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сумма оборотов</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ОстатокНаДату</dataPath>
+			<field>ОстатокНаДату</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Остаток на дату</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Товары</dataPath>
+			<field>Товары</field>
 		</field>
 		<dataSource>ИсточникДанных1</dataSource>
 		<query>ВЫБРАТЬ
-	ОборотыТоваровОбороты.Товар КАК Товар,
-	ОборотыТоваровОбороты.КоличествоОборот КАК КоличествоОборот,
-	ОборотыТоваровОбороты.СуммаОборот КАК СуммаОборот
+    СпрТовары.Ссылка КАК Товар,
+    ЕСТЬNULL(Остатки.КоличествоОстаток, 0) КАК ОстатокНаДату,
+    ЕСТЬNULL(Обороты.КоличествоОборот, 0)   КАК КоличествоОборот,
+    ЕСТЬNULL(Обороты.СуммаОборот, 0)        КАК СуммаОборот
 ИЗ
-	РегистрНакопления.ОборотыТоваров.Обороты КАК ОборотыТоваровОбороты</query>
+    Справочник.Товары КАК СпрТовары
+    ЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.ОстаткиТоваров.Остатки(&amp;ДатаОстатков, ) КАК Остатки
+        ПО Остатки.Товары = СпрТовары.Ссылка
+    ЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.ОборотыТоваров.Обороты(&amp;НачалоПериода, &amp;КонецПериода, , ) КАК Обороты
+        ПО Обороты.Товар = СпрТовары.Ссылка
+ГДЕ
+    СпрТовары.ЭтоГруппа = ЛОЖЬ</query>
 	</dataSet>
+	<totalField>
+		<dataPath>ОстатокНаДату</dataPath>
+		<expression>Сумма(ОстатокНаДату)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>КоличествоОборот</dataPath>
+		<expression>Сумма(КоличествоОборот)</expression>
+	</totalField>
 	<totalField>
 		<dataPath>СуммаОборот</dataPath>
 		<expression>Сумма(СуммаОборот)</expression>
@@ -71,6 +109,40 @@
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
 		<useRestriction>false</useRestriction>
 	</parameter>
+	<parameter>
+		<name>Период</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>false</useRestriction>
+	</parameter>
+	<parameter>
+		<name>ДатаОстатков</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Дата остатков</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+	</parameter>
 	<settingsVariant>
 		<dcsset:name>Основной</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
@@ -78,6 +150,9 @@
 			<dcsset:selection>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Товар</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ОстатокНаДату</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>КоличествоОборот</dcsset:field>

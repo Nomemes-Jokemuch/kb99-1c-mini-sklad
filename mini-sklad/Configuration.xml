@@ -259,6 +259,7 @@
 			<Report>ОборотыПоТоварам</Report>
 			<AccumulationRegister>ОстаткиТоваров</AccumulationRegister>
 			<AccumulationRegister>ОборотыТоваров</AccumulationRegister>
+			<AccumulationRegister>ПартииТоваров</AccumulationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>
