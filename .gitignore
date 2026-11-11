@@ -9,6 +9,7 @@
 1Cv8Log/
 *.log
 *.tmp
+ConfigDumpInfo.xml
 
 # Служебные файлы редакторов
 .vscode/
